@@ -36,11 +36,13 @@ public class MainView extends VerticalLayout {
         grid.addClassName("contact.grid");
         grid.setSizeFull();
         grid.removeColumnByKey("company");
-        grid.setColumns("firstName", "lastName", "email", "status", "company");
+        grid.setColumns("firstName", "lastName", "email", "status");
         grid.addColumn(contact -> {
             Company company = contact.getCompany();
             return company == null ? "-" : company.getName();
         }).setHeader("Company");
+
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
     private final ContactService contactService;
