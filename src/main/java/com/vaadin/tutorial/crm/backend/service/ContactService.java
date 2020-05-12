@@ -90,4 +90,13 @@ public class ContactService {
                             }).collect(Collectors.toList()));
         }
     }
+
+    public List<Contact> findAll(String filterText) {
+        if (filterText == null || filterText.isEmpty()) {
+            // Return all entries from database.
+            return  contactRepository.findAll();
+        } else {
+            return contactRepository.search(filterText);
+        }
+    }
 }
