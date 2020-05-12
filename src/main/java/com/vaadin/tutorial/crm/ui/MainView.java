@@ -23,10 +23,16 @@ public class MainView extends VerticalLayout {
 
         addClassName("list-view");
         setSizeFull();
+        configureFilter();
         configureGrid();
 
         add(filterText, grid);
         updateList();
+    }
+
+    private void configureFilter() {
+        filterText.setPlaceholder("Filter by name ...");
+        filterText.setClearButtonVisible(true);
     }
 
     private void updateList() {
