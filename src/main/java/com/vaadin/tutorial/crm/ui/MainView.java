@@ -1,6 +1,7 @@
 package com.vaadin.tutorial.crm.ui;
 
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route("")
 public class MainView extends VerticalLayout {
 
+    private final ContactForm form;
     Grid<Contact> grid = new Grid<>(Contact.class);
     TextField filterText = new TextField();
 
@@ -27,7 +29,12 @@ public class MainView extends VerticalLayout {
         configureFilter();
         configureGrid();
 
-        add(filterText, grid);
+        form = new ContactForm();
+        Div content = new Div(grid, form);
+        content.addClassName("content");
+        content.setSizeFull();
+
+        add(filterText, content);
         updateList();
     }
 
