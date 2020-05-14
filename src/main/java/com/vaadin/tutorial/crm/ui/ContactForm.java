@@ -8,8 +8,12 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.BeanValidationBinder;
+import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.tutorial.crm.backend.entity.Company;
 import com.vaadin.tutorial.crm.backend.entity.Contact;
+
+import java.util.List;
 
 /**
  * ContactForm is a Vaadin Component and handles the UI actions.
@@ -26,8 +30,16 @@ public class ContactForm extends FormLayout {
     Button delete = new Button("Delete");
     Button close = new Button("Cancel");
 
-    public ContactForm() {
+    Binder<Contact> binder = new BeanValidationBinder<>(Contact.class);
+
+    public ContactForm(List<Company> companies) {
         addClassName("contact-form");
+
+        binder.bindInstanceFields(this);
+        status.setItems(Contact.Status.values());
+        company.setItems(companies);
+        company.setItemLabelGenerator(Company::getName);
+
         add(firstName,
                 lastName,
                 email,
