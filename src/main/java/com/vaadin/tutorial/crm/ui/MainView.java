@@ -34,11 +34,27 @@ public class MainView extends VerticalLayout {
         configureGrid();
 
         form = new ContactForm(companyService.findAll());
+        form.addListener(ContactForm.SaveEvent.class, this::saveContact);
+        form.addListener(ContactForm.DeleteEvent.class, this::deleteContact);
+        form.addListener(ContactForm.CloseEvent.class, e -> closeEditor());
+
         Div content = new Div(grid, form);
         content.addClassName("content");
         content.setSizeFull();
 
         add(filterText, content);
+        updateList();
+        closeEditor();
+    }
+
+    private void deleteContact(ContactForm.DeleteEvent evt) {
+        contactService.delete(evt.getContact());
+        updateList();
+        closeEditor();
+    }
+
+    private void saveContact(ContactForm.SaveEvent evt) {
+        contactService.save(evt.getContact());
         updateList();
         closeEditor();
     }
