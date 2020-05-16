@@ -43,6 +43,31 @@ public class MainView extends VerticalLayout {
         closeEditor();
     }
 
+    private void configureGrid() {
+        grid.addClassName("contact.grid");
+        grid.setSizeFull();
+        grid.removeColumnByKey("company");
+        grid.setColumns("firstName", "lastName", "email", "status");
+        grid.addColumn(contact -> {
+            Company company = contact.getCompany();
+            return company == null ? "-" : company.getName();
+        }).setHeader("Company");
+
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
+        grid.asSingleSelect().addValueChangeListener(evt -> editContact(evt.getValue()));
+    }
+
+    private void editContact(Contact contact) {
+        if(contact == null) {
+            closeEditor();
+        } else {
+            form.setConatct(contact);
+            form.setVisible(true);
+            addClassName("editing");
+        }
+    }
+
     private void closeEditor() {
         form.setConatct(null);
         form.setVisible(false);
@@ -58,19 +83,6 @@ public class MainView extends VerticalLayout {
 
     private void updateList() {
         grid.setItems(contactService.findAll(filterText.getValue()));
-    }
-
-    private void configureGrid() {
-        grid.addClassName("contact.grid");
-        grid.setSizeFull();
-        grid.removeColumnByKey("company");
-        grid.setColumns("firstName", "lastName", "email", "status");
-        grid.addColumn(contact -> {
-            Company company = contact.getCompany();
-            return company == null ? "-" : company.getName();
-        }).setHeader("Company");
-
-        grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
     private final ContactService contactService;
