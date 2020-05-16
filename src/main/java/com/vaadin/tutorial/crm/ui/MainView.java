@@ -40,6 +40,13 @@ public class MainView extends VerticalLayout {
 
         add(filterText, content);
         updateList();
+        closeEditor();
+    }
+
+    private void closeEditor() {
+        form.setConatct(null);
+        form.setVisible(false);
+        removeClassName("editing");
     }
 
     private void configureFilter() {
