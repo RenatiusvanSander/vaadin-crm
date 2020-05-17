@@ -20,13 +20,13 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Route("")
 @CssImport("./styles/shared-styles.css")
-public class MainView extends VerticalLayout {
+public class ListView extends VerticalLayout {
 
     private final ContactForm form;
     Grid<Contact> grid = new Grid<>(Contact.class);
     TextField filterText = new TextField();
 
-    public MainView(@Autowired ContactService contactService, @Autowired CompanyService companyService) {
+    public ListView(@Autowired ContactService contactService, @Autowired CompanyService companyService) {
         this.contactService = contactService;
         this.companyService = companyService;
 
