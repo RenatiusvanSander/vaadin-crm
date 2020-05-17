@@ -1,13 +1,13 @@
 package com.vaadin.tutorial.crm.ui;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.tutorial.crm.backend.entity.Company;
 import com.vaadin.tutorial.crm.backend.entity.Contact;
@@ -18,8 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * This handles the main router to localhost:8080 and its layout.
  */
-@Route("")
-@CssImport("./styles/shared-styles.css")
+@Route(value = "", layout = MainLayout.class)
+@PageTitle("Contacts | Vaadin CRM")
 public class ListView extends VerticalLayout {
 
     private final ContactForm form;
