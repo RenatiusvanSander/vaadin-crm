@@ -12,42 +12,51 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.tutorial.crm.backend.service.CompanyService;
 import com.vaadin.tutorial.crm.backend.service.ContactService;
 import com.vaadin.tutorial.crm.ui.MainLayout;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
-@PageTitle("Dashboard | Vaadin CRM")
 @Route(value = "dashboard", layout = MainLayout.class)
+@PageTitle("Dashboard | Vaadin CRM")
 public class DashboardView extends VerticalLayout {
 
-    private final ContactService contactService;
-    private final CompanyService companyService;
+    private ContactService contactService;
+    private CompanyService companyService;
 
-    public DashboardView(@Autowired ContactService contactService, @Autowired CompanyService companyService) {
+    /*
+    public DashboardView(ContactService contactService, CompanyService companyService) {
+        this.contactService = contactService;
+        this.companyService = companyService;
+        addClassName("dashboard-view");
+        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+    }
+    */
+
+    public DashboardView(ContactService contactService, CompanyService companyService) {
         this.contactService = contactService;
         this.companyService = companyService;
 
         addClassName("dashboard-view");
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
-        add(getContactStats(),
-                getCompaniesChart());
+        add(getContactStats(), getCompaniesChart());
     }
 
-    private Component getCompaniesChart() {
-        Chart chart =new Chart(ChartType.PIE);
+    private Component getContactStats() {
+        Span stats = new Span(contactService.count() + " contacts");
 
-        DataSeries dataSeries = new DataSeries();
-        Map<String, Integer> stats = companyService.getStats();
-        stats.forEach((name, number) -> dataSeries.add(new DataSeriesItem(name, number)));
 
-        chart.getConfiguration().setSeries(dataSeries);
-        return chart;
-    }
-
-    private Span getContactStats() {
-        Span stats = new Span(contactService.count() + "contacts");
         stats.addClassName("contact-stats");
         return stats;
+    }
+
+    private Chart getCompaniesChart() {
+        Chart chart = new Chart(ChartType.PIE);
+
+        DataSeries dataSeries = new DataSeries();
+        Map<String, Integer> companies = companyService.getStats();
+        companies.forEach((company, employees) ->
+                dataSeries.add(new DataSeriesItem(company, employees)));
+        chart.getConfiguration().setSeries(dataSeries);
+        return chart;
     }
 }

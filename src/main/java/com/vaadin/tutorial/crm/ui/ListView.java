@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * This handles the main router to localhost:8080 and its layout.
  */
-@Route(value = "", layout = MainLayout.class)
+@Route(value="", layout = MainLayout.class)
 @PageTitle("Contacts | Vaadin CRM")
 public class ListView extends VerticalLayout {
 
