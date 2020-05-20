@@ -1,4 +1,4 @@
-package com.vaadin.tutorial.crm.ui;
+package com.vaadin.tutorial.crm.ui.views.list;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -51,7 +51,7 @@ public class ContactForm extends FormLayout {
                 createButtonsLayout());
     }
 
-    public void setConatct(Contact contact) {
+    public void setContact(Contact contact) {
         binder.setBean(contact);
     }
 
